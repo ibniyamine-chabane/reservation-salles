@@ -13,8 +13,9 @@
     //$connectDatabase = mysqli_connect("localhost:3306", "root", "", "reservationsalles",3307);
     $request = $connectDatabase->query('SELECT login , password FROM utilisateurs');
     $data = $request->fetch_all();  //je recupere tous les donné en une fois avec fetch_all.
-    var_dump($data);
-    print_r($data);
+
+
+
 
     // si j'appuie sur le boutton submit
     if (isset($_POST["submit"])) { 
@@ -30,7 +31,7 @@
             // si password et password_confirm sont identique
             if ($password == $password_confirm) {
                     $loginOk = false;
-                    $test = $data;
+                    
                     // Je lis dans le tableau de la base de donées avec une boucle
                     foreach ($data as $user) { 
                         
@@ -43,11 +44,6 @@
                         } else {
                             $loginOk = true;
                         }
-                        
-                        if (array_key_exists('', $user[0])) {
-                            $loginOk = true;
-                            echo "";
-                        } 
             
                     }
 

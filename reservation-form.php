@@ -11,16 +11,22 @@ $message = "";
 
         if ( isset($_POST['submit']) ) {
 
-            if ( $_POST['titre'] && $_POST['debut'] && $_POST['fin'] && $_POST['date'] && $_POST['description']) {
+            if ( $_POST['titre'] && $_POST['debut'] && $_POST['fin'] && $_POST['description']) {
                 
                 $titre = $_POST['titre'];
                 $debut = $_POST['debut'];
                 $fin   = $_POST['fin'];
-                $date  = $_POST['date'];
-                $description = $_POST['description'];
-            
-            }
+                $description = htmlspecialchars($_POST['description'], ENT_QUOTES);
+                $userId = $_SESSION['id'];
 
+                if ($debut != $fin && $debut < $fin) {
+
+                    $request = $con->query("INSERT INTO reservations(titre, description, debut, fin, id_utilisateur ) VALUES ('$titre','$description','$debut','$fin', '$userId')");
+
+                }
+
+                
+            }
 
         }
 
@@ -43,9 +49,29 @@ $message = "";
             <label for="">Titre</label>
             <input type="text" name="titre" placeholder="titre de l'évenement" required>
             <label for="">Heure de debut :</label>
-            <input type="time" name="debut">
+            <input type="datetime-local" name="debut" id="">
+            <!--<select type="datetime-local" name="debut" id="">
+                <option value="09:00">08h00</option>
+                <option value="10:00">09h00</option>
+                <option value="11:00">10h00</option>
+                <option value="12:00">11h00</option>
+                <option value="13:00">12h00</option>
+                <option value="08:00">13h00</option>
+                <option value="14:00">14h00</option>
+                <option value="15:00">15h00</option>
+            </select>-->
             <label for="">Heure de fin :</label>
-            <input type="time" name="fin">
+            <input type="datetime-local" name="fin" id="">
+            <!--<select type="datetime-local" name="fin" id="">
+                <option value="09:00">08h00</option>
+                <option value="10:00">09h00</option>
+                <option value="11:00">10h00</option>
+                <option value="12:00">11h00</option>
+                <option value="13:00">12h00</option>
+                <option value="08:00">13h00</option>
+                <option value="14:00">14h00</option>
+                <option value="15:00">15h00</option>
+            </select>-->
             <label for="">Description :</label>
             <textarea name="description" id="" cols="30" rows="10" ></textarea>
             <input type="submit" name="submit" value="soumettre ma réservation">
