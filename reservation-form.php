@@ -8,6 +8,8 @@ $request = $con->query('SELECT * FROM reservations');
 $data = $request->fetch_All();
 
 $message = "";
+//echo date(DATE_RFC2822);
+echo date("d-m-Y H:i:s").'<br>';
 
         if ( isset($_POST['submit']) ) {
 
@@ -19,11 +21,17 @@ $message = "";
                 $description = htmlspecialchars($_POST['description'], ENT_QUOTES);
                 $userId = $_SESSION['id'];
 
-                if ($debut != $fin && $debut < $fin) {
+                if ( $debut < date("d-m-Y H:i:s")) {        
+                    echo "Nonnnn tu ne pas faire ça";
+                }
+
+                /*if ($debut != $fin && $debut < $fin) {
 
                     $request = $con->query("INSERT INTO reservations(titre, description, debut, fin, id_utilisateur ) VALUES ('$titre','$description','$debut','$fin', '$userId')");
 
-                }
+                } else {
+                    $message = "vous ne pouvez pas reserver à ce créneau il est déja passé";
+                }*/
 
                 
             }

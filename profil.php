@@ -1,9 +1,9 @@
 <?php
         session_start();
-      /*  if (empty($_SESSION['login'])){ // si l'utilisateur est déja connecté il est rediriger vers la page d'accueil.php
+        if (empty($_SESSION['login'])){ // si l'utilisateur est déja connecté il est rediriger vers la page d'accueil.php
             header("Location:index.php");
             exit;
-        }*/
+        } 
 
         $message = ""; // variable d'affichage de message d'erreur à déclarer pour éviter un message  d'erreur.
         $already_exist_login = "";
@@ -15,16 +15,16 @@
 
                 //$connectDatabase = mysqli_connect("localhost", "root", "", "reservationsalles",3307);
         $request = $connectDatabase->query('SELECT login , password FROM utilisateurs');
-        $data = $request->fetch_all();  //je recupere tous les donné en une fois avec fetch_all.
+        $data = $request->fetch_all();  //je recupere toutes les données en une fois avec fetch_all.
         
                 // nouvelle requete pour avoir le pré-remplis de l'utilisateur connecté
         $connectDatabase2 = mysqli_connect("localhost", "root", "", "reservationsalles",3307);
-        //$filled = $_SESSION['login'];
-        $sql_select = "SELECT `login` , `password` FROM utilisateurs WHERE login = ''"; // $filled
+        $filled = $_SESSION['login'];
+        $sql_select = "SELECT `login` , `password` FROM utilisateurs WHERE login = '$filled'"; // $filled
         $request_info = $connectDatabase2->query($sql_select);
         $user_info = $request_info->fetch_all();
-        //var_dump($user_info);
-        //$login_prefilled = $user_info[0][0];
+        var_dump($user_info);
+        $login_prefilled = $user_info[0][0];
 
             // formulaire de changement de login
         if (isset($_POST['submit_login'])) {
@@ -143,7 +143,7 @@
                         <form method="post">
 
                             <label for="flogin">Login</label>
-                                <input type="text" name="login" value=<!--$login_prefilled--> placeholder="Choisissez votre login">
+                                <input type="text" name="login" value=<?= $login_prefilled ?> placeholder="Choisissez votre login">
                             <label for="">renseigner votre mot de passe actuel pour tout changement</label>
                                 <input type="password" name="current_password" placeholder="votre mot de passe actuel">
                                 <input type="submit" name="submit_login" value="valider">

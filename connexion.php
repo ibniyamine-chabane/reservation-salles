@@ -1,6 +1,12 @@
 <?php 
     session_start();
     include("connect.php");
+    
+    if (!empty($_SESSION['login'])){ // si l'utilisateur est déja connecté il est rediriger vers la page d'accueil.php
+        header("Location:index.php");
+        exit;
+    }
+
     $message = "";
     //var_dump($data);
     if (isset($_POST["submit"])) { // si j'appuie sur le boutton submit su formulaire de connexion
